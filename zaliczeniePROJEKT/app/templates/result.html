@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Results</title>
+</head>
+<body>
+    <h1>Results</h1>
+    <p>Fuel needed: {{ fuel_needed }} liters</p>
+    <p>Refueling count: {{ refueling_count }}</p>
+    <h2>Selected additional stops:</h2>
+    <ul>
+        {% for stop in selected_additional_stops %}
+            <li>{{ stop }}</li>
+        {% endfor %}
+    </ul>
+    <p>Total distance: {{ total_distance }} km</p>
+    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d16805.867146467655!2d17.1995261369021!3d51.23368068955267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x470fe56e27e62ee9%3A0xd30826ed28ce320c!2sStacja%20Paliw%20ORLEN!5e0!3m2!1spl!2spl!4v1704842185727!5m2!1spl!2spl" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</body>
+</html>
+
+
+

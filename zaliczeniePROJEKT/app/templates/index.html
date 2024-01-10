@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fuel Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Fuel Calculator</h1>
+    <form method="post" action="{% url 'fuel_calculation' %}">
+        {% csrf_token %}
+        {{ form.vehicle_type }}<br>
+        {{ form.route_choice }}<br>
+        <div id="additionalStops">
+           
+        </div>
+        <button type="submit">Oblicz</button>
+    </form>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#id_route_choice').change(function () {
+                var routeChoice = $(this).val();
+                var additionalStopsDiv = $('#additionalStops');
+
+                additionalStopsDiv.empty();
+
+                if (routeChoice === '1') {
+                    additionalStopsDiv.append('<label><input type="checkbox" name="stop" value="lodz"> Łódź</label>');
+                    additionalStopsDiv.append('<label><input type="checkbox" name="stop" value="kalisz"> Kalisz</label>');
+                } else if (routeChoice === '2') {
+                    additionalStopsDiv.append('<label><input type="checkbox" name="stop" value="radom"> Radom</label>');
+                    additionalStopsDiv.append('<label><input type="checkbox" name="stop" value="kielce"> Kielce</label>');
+                } else if (routeChoice === '3') {
+                    additionalStopsDiv.append('<label><input type="checkbox" name="stop" value="lodz"> Łódź</label>');
+                    additionalStopsDiv.append('<label><input type="checkbox" name="stop" value="torun"> Toruń</label>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+
