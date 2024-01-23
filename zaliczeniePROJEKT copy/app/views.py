@@ -28,7 +28,7 @@ def find_optimal_station(route_choice, remaining_distance, stations):
     # Jeśli nie znaleziono odpowiedniej stacji, wybierz najbliższą
     return min(stations[route_choice], key=stations[route_choice].get)
 
-# Widok Django
+
 def fuel_calculation(request):
     form = FuelCalculationForm()
     selected_stops = []
@@ -37,19 +37,18 @@ def fuel_calculation(request):
         form = FuelCalculationForm(request.POST)
 
         if form.is_valid():
-            selected_stops = form.set_stops_choices()
-
             vehicle_type = form.cleaned_data['vehicle_type']
             route_choice = form.cleaned_data['route_choice']
 
+            if not vehicle_type:
+                return HttpResponse("Proszę wybrać rodzaj pojazdu.")
             fuel_consumption, tank_capacity = 0, 0
 
             if vehicle_type == 'TIR':
                 fuel_consumption, tank_capacity = 30, 600
             elif vehicle_type == 'Samochod dostawczy':
                 fuel_consumption, tank_capacity = 15, 50
-            else:
-                return HttpResponse("Niepoprawny rodzaj pojazdu.")
+           
 
             selected_additional_stops = request.POST.getlist('stop')
 
@@ -75,8 +74,8 @@ def fuel_calculation(request):
                 'selected_additional_stops': selected_additional_stops,
                 'total_distance': distance,
                 'optimal_station': optimal_station,
+                'route_choice': route_choice,
             })
 
     return render(request, 'index.html', {'form': form, 'selected_stops': selected_stops})
-
 

@@ -5,129 +5,164 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-    * {
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-    }
-    button {
-        background-color: #f4511e;
-        border: none;
-        color: white;
-        padding: 16px 32px;
-        text-align: center;
-        font-size: 16px;
-        margin: 4px 2px;
-        opacity: 0.6;
-        transition: 0.3s;
-        display: inline-block;
-        text-decoration: none;
-        cursor: pointer;
-      }
-      
-    button:hover {opacity: 1}
-    /* Style the header */
-    header {
-      background-color: #666666;
-      padding: 30px;
-      text-align: center;
-      font-size: 35px;
-      color: rgb(255, 255, 255);
-    }
-
-    /* Container for flexboxes */
-    section {
-      display: -webkit-flex;
-      display: flex;
-    }
-    
-    /* Style the navigation menu */
-    nav {
-      -webkit-flex: 1;
-      -ms-flex: 1;
-      flex: 1;
-      background: #ccc;
-      padding: 20px;
-    }
-    
-    /* Style the list inside the menu */
-    nav ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    
-    /* Style the content */
-    article {
-      -webkit-flex: 3;
-      -ms-flex: 3;
-      flex: 3;
-      background-color: #f1f1f1;
-      padding: 10px;
-    }
-    
-    /* Style the footer */
-    footer {
-      background-color: #777;
-      padding: 10px;
-      text-align: center;
-      color: white;
-    }
- 
-        /* Stylowanie rozwijanej listy */
- select {
-            /* Dodaj dowolne niestandardowe właściwości CSS */
-        padding: 10px; /* Wielkość wypełnienia */
-        font-size: 16px; /* Rozmiar czcionki */
-        border-radius: 5px; /* Zaokrąglenie rogów */
-        border: 1px solid #ccc; /* Ramka */
-        background-color: #f9f9f9; /* Kolor tła */
-        width: 200px; /* Szerokość listy rozwijanej */
-            /* Możesz zdefiniować dodatkowe style tutaj */
+        * {
+            box-sizing: border-box;
         }
-   
-      
-</style>
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Style the header */
+        header {
+            background-color: #666666;
+            padding: 30px;
+            text-align: center;
+            font-size: 35px;
+            color: rgb(255, 255, 255);
+        }
+
+        /* Container for flexboxes */
+        section {
+            display: -webkit-flex;
+            display: flex;
+        }
+
+        /* Style the navigation menu */
+        nav {
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            background: #ccc;
+            padding: 20px;
+        }
+
+        /* Style the list inside the menu */
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        /* Style the content */
+        article {
+            -webkit-flex: 3;
+            -ms-flex: 3;
+            flex: 3;
+            background-color: #f1f1f1;
+            padding: 10px;
+        }
+
+        /* Style the footer */
+        footer {
+            background-color: #777;
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        /* Stylowanie rozwijanej listy */
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            width: 200px;
+        }
+
+        /* Stylowanie przycisku */
+        button {
+            background-color: #f4511e;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+            font-size: 16px;
+            margin: 4px 2px;
+            opacity: 0.6;
+            transition: 0.3s;
+            display: inline-block;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            opacity: 1;
+        }
+
+        /* Stylowanie checkboxów */
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Fuel Calculator</h1>
-    <form method="post" action="{% url 'fuel_calculation' %}">
-        {% csrf_token %}
-        Wybór pojazdu
-        {{ form.vehicle_type }}<br>
-        Wybór trasy
-        {{ form.route_choice }}<br>
-        <div id="additionalStops">
-            <!-- Pole wyboru dodatkowych postojów będzie tutaj dynamicznie dodawane -->
-        </div>
-        <button type="submit">Oblicz</button>
-    </form>
+    <header>
+        <h1>Kalkulator paliwa</h1>
+    </header>
+    <section>
+        <nav>
+            <!-- Możesz dodać nawigację tutaj, jeśli to potrzebne -->
+        </nav>
+        <article>
+            <form method="post" action="{% url 'fuel_calculation' %}">
+                {% csrf_token %}
+                <p>Wybór pojazdu</p>
+                {{ form.vehicle_type }}<br>
+                <p>Wybór trasy</p>
+                {{ form.route_choice }}<br>
+                <div id="additionalStops">
+                    <!-- Pole wyboru dodatkowych postojów będzie tutaj dynamicznie dodawane -->
+                </div>
+                <button type="submit">Oblicz</button>
+            </form>
+        </article>
+    </section>
+    <footer>
+        <!-- Możesz dodać treść stopki tutaj, jeśli to potrzebne -->
+    </footer>
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#id_route_choice').change(function () {
-                var routeChoice = $(this).val();
-                var additionalStopsDiv = $('#additionalStops');
+        document.addEventListener('DOMContentLoaded', function () {
+            var routeChoiceSelect = document.getElementById('id_route_choice');
+            var additionalStopsDiv = document.getElementById('additionalStops');
 
-                additionalStopsDiv.empty();
+            routeChoiceSelect.addEventListener('change', function () {
+                var routeChoice = routeChoiceSelect.value;
+
+                // Wyczyszczenie poprzednich checkboxów
+                additionalStopsDiv.innerHTML = '';
 
                 if (routeChoice === '1') {
-                    additionalStopsDiv.append('<label><input type="checkbox" name="stop" value="lodz"> Łódź</label>');
-                    additionalStopsDiv.append('<label><input type="checkbox" name="stop" value="kalisz"> Kalisz</label>');
+                    createCheckbox('lodz', 'Łódź');
+                    createCheckbox('kalisz', 'Kalisz');
                 } else if (routeChoice === '2') {
-                    additionalStopsDiv.append('<label><input type="checkbox" name="stop" value="radom"> Radom</label>');
-                    additionalStopsDiv.append('<label><input type="checkbox" name="stop" value="kielce"> Kielce</label>');
+                    createCheckbox('radom', 'Radom');
+                    createCheckbox('kielce', 'Kielce');
                 } else if (routeChoice === '3') {
-                    additionalStopsDiv.append('<label><input type="checkbox" name="stop" value="lodz"> Łódź</label>');
-                    additionalStopsDiv.append('<label><input type="checkbox" name="stop" value="torun"> Toruń</label>');
+                    createCheckbox('lodz', 'Łódź');
+                    createCheckbox('torun', 'Toruń');
                 }
             });
+
+            function createCheckbox(value, label) {
+                var checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.name = 'stop';
+                checkbox.value = value;
+
+                var checkboxLabel = document.createElement('label');
+                checkboxLabel.appendChild(checkbox);
+                checkboxLabel.appendChild(document.createTextNode(' ' + label));
+
+                additionalStopsDiv.appendChild(checkboxLabel);
+            }
         });
     </script>
 </body>
 </html>
-
-
-
 
